@@ -1,0 +1,3 @@
+[submodule "drowaudio"]
+	path = drowaudio
+	url = https://github.com/bpreder/drowaudio
