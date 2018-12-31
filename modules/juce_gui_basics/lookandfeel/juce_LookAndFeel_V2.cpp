@@ -1257,6 +1257,13 @@ void LookAndFeel_V2::drawLabel (Graphics& g, Label& label)
     }
 
     g.drawRect (label.getLocalBounds());
+#if SCL_DEBUG_PAINT_OUTLINE
+    if (SCL::Globals::showOutlines == true)
+    {
+        g.setColour (Colours::yellow);
+        g.drawRect (label.getLocalBounds());
+    }
+#endif
 }
 
 BorderSize<int> LookAndFeel_V2::getLabelBorderSize (Label& label)

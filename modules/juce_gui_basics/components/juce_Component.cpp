@@ -1816,11 +1816,18 @@ void Component::internalRepaintUnchecked (Rectangle<int> area, bool isEntireComp
 }
 
 //==============================================================================
-void Component::paint (Graphics&)
+void Component::paint (Graphics& g)
 {
     // if your component is marked as opaque, you must implement a paint
     // method and ensure that its entire area is completely painted.
     jassert (getBounds().isEmpty() || ! isOpaque());
+#if SCL_DEBUG_PAINT_OUTLINE
+    if (SCL::Globals::showOutlines == true)
+    {
+        g.setColour (Colours::yellow);
+        g.drawRect (0, 0, getWidth(), getHeight());
+    }
+#endif
 }
 
 void Component::paintOverChildren (Graphics&)

@@ -1146,6 +1146,13 @@ public:
     //==============================================================================
     void paint (Graphics& g, LookAndFeel& lf)
     {
+#if SCL_DEBUG_PAINT_OUTLINE
+        if (SCL::Globals::showOutlines == true)
+        {
+            g.setColour (Colours::yellow);
+            g.drawRect (0, 0, owner.getWidth(), owner.getHeight());
+        }
+#endif
         if (style != IncDecButtons)
         {
             if (isRotary())
