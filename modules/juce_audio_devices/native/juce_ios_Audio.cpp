@@ -1210,12 +1210,22 @@ struct iOSAudioIODevice::Pimpl      : public AudioPlayHead,
                 StringArray result;
 
                 auto route = [AVAudioSession sharedInstance].currentRoute;
+                
+                // Work-around for built-in speaker.  We want two outputs, not one,
+                // so we can mix the stereo channels to mono.  The number of output channels
+                // determines how many channels our audio buffer will have.
+                if (isInput == false
+                    && route.outputs.count == 1
+                    && route.outputs.firstObject.channels.count == 1)
+                {
+                    return { "Left", "Right" };
+                }
 
                 for (AVAudioSessionPortDescription* port in (isInput ? route.inputs : route.outputs))
                 {
                     for (AVAudioSessionChannelDescription* desc in port.channels)
                         result.add (nsStringToJuce (desc.channelName));
-                }
+                    }
 
                 // A fallback for the iOS simulator and older iOS versions
                 if (result.isEmpty())
